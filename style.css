@@ -21,6 +21,12 @@ body {
     grid-template-columns: repeat(3, auto);
 }
 
+.board.x .cell:not(.x):not(.circle):hover::after,
+.board.x .cell:not(.x):not(.circle):hover::before {
+    background: rgba(255,255,255,0.3) !important;
+}
+
+/* Célula */
 .cell {
     width: 100px;
     height: 100px;
@@ -28,6 +34,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+}
+
+.cell.x, .cell.circle {
+    cursor: not-allowed;
 }
 
 .cell:nth-child(1),
@@ -54,6 +65,40 @@ body {
     border-right: none;
 }
 
+/* X */
+.cell.x::after,
+.cell.x::before,
+.board.x .cell:not(.x):not(.circle):hover::after,
+.board.x .cell:not(.x):not(.circle):hover::before {
+    content: "";
+    height: calc(100px * 0.15);
+    width: calc(100px * 0.9);
+    background: white;
+    position: absolute;
+}
+
+.cell.x::after,
+.board.x .cell:not(.x):not(.circle):hover::after {
+    transform: rotate(45deg);
+}
+
+.cell.x::before,
+.board.x .cell:not(.x):not(.circle):hover::before {
+    transform: rotate(-45deg);
+}
+
+/* O */
+.cell.circle::after,
+.cell.circle::before {
+    content: "";
+    height: calc(100px * 0.9);
+    width: calc(100px * 0.9);
+    background: white;
+    position: absolute;
+    border-radius: 50%;
+}
+
+/* Mensagem de vitória */
 .winning-message {
     display: none;
 }
