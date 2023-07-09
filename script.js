@@ -59,6 +59,12 @@ const checkWin = (currentPlayer) => {
     })
 }
 
+const checkDraw = () => {
+    return [...cellElements].every(cell => {
+        return cell.classList.contains('x') || cell.classList.contains('circle');
+    })
+}
+
 const placeMark = (cell, classToAdd) => {
     cell.classList.add(classToAdd);
 }
@@ -89,15 +95,21 @@ const handleClick = (e) => {
     //checar por vitória
 
     const isWin = checkWin(classToAdd);
-    if (isWin) {
-        endGame(false);
-    }
-
+    
     //checar por empate
 
-    //Mudar simbolo
+    const isDraw = checkDraw();
+
+    if (isWin) {
+        endGame(false);
+    } else if (isDraw) {
+        endGame(true);
+    } else {
+        //Mudar simbolo
     swapTurns();
+    }
 }
+
 
 for (const cell of cellElements) {
     cell.addEventListener('click', handleClick, { once: true });
