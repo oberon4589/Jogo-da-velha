@@ -2,6 +2,7 @@ const cellElements = document.querySelectorAll('[data-cell]');
 const board = document.querySelector('[data-board]');
 const winningMessageElement = document.querySelector('[data-winning-message-text]');
 const winningMessage = document.querySelector('[data-winning-message]');
+const RestarButton = document.querySelector('[data-restart-button]');
 
 let isCircleTurn = false;
 
@@ -20,13 +21,18 @@ const winningCombinations = [
 ]
 
 const startGame = () => {
+    isCircleTurn = false;
+
     for (const cell of cellElements) {
+        cell.classList.remove('x');
+        cell.classList.remove('circle');
+        cell.removeEventListener('click', handleClick);
         cell.addEventListener('click', handleClick, { once: true })
     }
 
-    isCircleTurn = false;
-
+    setBoardHoverClass();
     board.classList.add('x');
+    winningMessage.classList.remove('show-winning-message');
 }
 
 const endGame = (isDraw) => {
@@ -41,6 +47,10 @@ const endGame = (isDraw) => {
     winningMessage.classList.add('show-winning-message');
 }
 
+const handleRestartClick = () => {
+
+}
+
 const checkWin = (currentPlayer) => {
     return winningCombinations.some(combination => {
         return combination.every(index => { //Vê se alguma celula do array é verdadeira
@@ -53,9 +63,7 @@ const placeMark = (cell, classToAdd) => {
     cell.classList.add(classToAdd);
 }
 
-const swapTurns = () => {
-    isCircleTurn = !isCircleTurn;
-
+const setBoardHoverClass = () => {
     board.classList.add('circle');
     board.classList.remove('x');
 
@@ -64,6 +72,12 @@ const swapTurns = () => {
     }else {
         board.classList.add('x');
     }
+}
+
+const swapTurns = () => {
+    isCircleTurn = !isCircleTurn;
+
+    setBoardHoverClass();
 }
 
 const handleClick = (e) => {
@@ -90,3 +104,4 @@ for (const cell of cellElements) {
 }
 
 startGame();
+RestarButton.addEventListener('click', startGame);
