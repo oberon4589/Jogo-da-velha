@@ -137,3 +137,7 @@ body {
     font-size: 5rem;
     font-family: sans-serif;
 }
+
+.show-winning-message {
+    display: flex;
+}
